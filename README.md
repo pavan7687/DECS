@@ -1,38 +1,44 @@
 
-# 🔑 Key-Value Store (C++ | LRU Cache | PostgreSQL)
+# Key-Value Store (C++ and PostgreSQL)
 
-A simple **client-server key-value store** built in **C++17**, featuring an **LRU cache** for fast access and a **PostgreSQL database** for persistent storage.
-
-## ⚙️ Features
-
-* REST API: `/set`, `/get`, `/del`
-* LRU caching for fast lookups
-* PostgreSQL backend for data persistence
-* Connection pooling for efficiency
-* CLI client for interaction
+This project is a simple key-value store made using **C++** and **PostgreSQL**.
+It has a **server** and a **client** program.
+The server uses an **LRU cache** for fast access and stores all data permanently in the database.
 
 ---
 
-## 🏗️ Run Instructions
+## Features
+
+* `/set`, `/get`, `/del` API support
+* LRU cache for faster data access
+* PostgreSQL for storing data
+* Command-line client for testing
+
+---
+
+## How to Run
 
 ```bash
 # Compile
-g++ kv_server.cpp -o kv_server -lpq -pthread -std=c++17
+g++ kv_server.cpp -o kv_server -lpq -pthread -std=c++17 -I/usr/include/postgresql
 g++ kv_client.cpp -o kv_client -pthread -std=c++17
 
-# Start Server
+# Start the server
 ./kv_server
 
-# Run Client
+# Run the client in another terminal
 ./kv_client
 ```
 
 ---
 
-## 🗄️ Database Setup
+## Database Setup
+
+Open PostgreSQL and run:
 
 ```sql
 CREATE DATABASE kvstore;
+\c kvstore
 CREATE TABLE kv_store (
   k INT PRIMARY KEY,
   v TEXT
@@ -41,14 +47,16 @@ CREATE TABLE kv_store (
 
 ---
 
-## 🧠 Overview
+## Working
 
-The client sends HTTP requests to the server.
-The server checks the **LRU cache** first — if the key is missing, it fetches data from **PostgreSQL**, updates the cache, and returns the result.
+* The **client** sends requests to the **server**.
+* The **server** checks the cache first.
+* If data is not in cache, it gets it from **PostgreSQL** and stores it in cache.
+* Data stays safe in the database even after restarting the server.
 
 ---
 
 **Author:** Pavan Kumar
-**Project:** DECS – Key-Value Store System
+**Project:** DECS – Key-Value Store
 
 ---
